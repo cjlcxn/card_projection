@@ -27,33 +27,15 @@ public class AccountController {
         this.cardService = cardService;
     }
 
+    // seeding, execute this before seeding cards
     @PostMapping("/accounts")
-    public void createAccounts(@RequestBody Account account) {
-
-
-        List<Card> cards = cardService.findAllCards();
-
-
-        List<Card> cards1 = new ArrayList<>();
-        cards1.add(cards.get(0));
-
-        List<Card> cards2 = new ArrayList<>();
-        cards2.add(cards.get(1));
-        cards2.add(cards.get(2));
+    public void createAccounts() {
 
         Account account1 = new Account(0, 100, "Premium", "Active");
         Account account2 = new Account(0, 150, "Normal", "Inactive");
 
-        account1.setCards(cards1);
-        account2.setCards(cards2);
-
-        System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXx");
-        System.out.println(account2);
-        System.out.println(account1);
-
         accountService.saveAccount(account1);
         accountService.saveAccount(account2);
-
     }
 
 }

@@ -1,8 +1,11 @@
 package com.hibernate.testCard.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -16,19 +19,20 @@ public class Card {
 
     @Column(name = "card_number")
     @Min(1)
-    private Integer cardNumber;
+    private int cardNumber;
 
     @Column(name = "card_type")
-    @NotEmpty
+    @NotNull(message = "is required")
     @Size(min = 3, message = "minimum 3 letter")
     private String cardType;
 
     @Column(name = "card_status")
-    @NotEmpty
+    @NotNull
     @Size(min = 3, message = "minimum 3 letter")
     private String cardStatus;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account_id", foreignKey = @ForeignKey(name = "FK_account_id"))
     private Account account;
 
@@ -89,7 +93,6 @@ public class Card {
                 ", cardNumber=" + cardNumber +
                 ", cardType='" + cardType + '\'' +
                 ", cardStatus='" + cardStatus + '\'' +
-                ", account=" + account +
                 '}';
     }
 }

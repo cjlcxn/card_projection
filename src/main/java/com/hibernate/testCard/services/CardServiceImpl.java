@@ -1,10 +1,12 @@
 package com.hibernate.testCard.services;
 
 
-import com.hibernate.testCard.entity.Account;
 import com.hibernate.testCard.entity.Card;
 import com.hibernate.testCard.projections.CardNoAccount;
-import com.hibernate.testCard.repository.CardRepository;
+import com.hibernate.testCard.projections.CardNoStatusAccount;
+import com.hibernate.testCard.projections.CardOnlyIdAccount;
+import com.hibernate.testCard.repository.card_repo.CardRepository;
+import com.hibernate.testCard.repository.card_repo.CustomCardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,15 +20,36 @@ public class CardServiceImpl implements CardService {
 
     private CardRepository cardRepository;
 
+    private CustomCardRepository customCardRepository;
+
     @Autowired
-    public CardServiceImpl(CardRepository cardRepository) {
+    public CardServiceImpl(CardRepository cardRepository, CustomCardRepository customCardRepository) {
         this.cardRepository = cardRepository;
+        this.customCardRepository = customCardRepository;
     }
 
+    @Override
+    public List<CardNoAccount> findByCardType(String cardType) {
+        List<CardNoAccount> cards = cardRepository.findByCardType(cardType);
+        return cards;
+    }
 
     @Override
-    public List<CardNoAccount> findByCardCategory(String cardCategory) {
-        return null;
+    public List<CardNoAccount> findByCardStatus(String cardStatus) {
+        List<CardNoAccount> cards = cardRepository.findByCardStatus(cardStatus, CardNoAccount.class);
+        return cards;
+    }
+
+    @Override
+    public List<CardNoStatusAccount> findCardNoStatusWhereTypeLengthBiggerThan(int lengthOfChar) {
+        List<CardNoStatusAccount> cards = cardRepository.findCardNoStatusWhereTypeLengthBiggerThan(lengthOfChar);
+        System.out.println(cards);
+        return cards;
+    }
+
+    @Override
+    public List<CardOnlyIdAccount> findCardIdWhereCardNumLarger(int cardNoMin) {
+        return customCardRepository.findCardIdWhereCardNumLarger(cardNoMin);
     }
 
     @Override

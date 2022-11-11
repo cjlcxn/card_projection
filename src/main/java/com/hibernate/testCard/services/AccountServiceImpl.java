@@ -1,8 +1,7 @@
 package com.hibernate.testCard.services;
 
 import com.hibernate.testCard.entity.Account;
-import com.hibernate.testCard.entity.Card;
-import com.hibernate.testCard.repository.AccountRepository;
+import com.hibernate.testCard.repository.account_repo.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

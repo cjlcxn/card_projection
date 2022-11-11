@@ -1,4 +1,4 @@
-package com.hibernate.testCard.repository;
+package com.hibernate.testCard.repository.account_repo;
 
 import com.hibernate.testCard.entity.Account;
 import org.springframework.data.jpa.repository.JpaRepository;

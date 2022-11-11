@@ -1,5 +1,7 @@
 package com.hibernate.testCard.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.util.List;
@@ -14,7 +16,6 @@ public class Account {
     private int id;
 
     @Column(name = "transaction_limit")
-    @DecimalMin(value = "1.00")
     private double transactionLimit;
 
     @Column(name = "account_category")
@@ -23,11 +24,12 @@ public class Account {
     private String accountCategory;
 
     @Column(name = "account_status")
-    @NotEmpty
+    @NotNull
     @Size(min = 3, message = "minimum 3 letter")
     private String accountStatus;
 
-    @OneToMany(mappedBy = "account", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JsonManagedReference
+    @OneToMany(mappedBy = "account", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Card> cards;
 
     public Account() {
@@ -87,7 +89,6 @@ public class Account {
                 ", transactionLimit=" + transactionLimit +
                 ", accountCategory='" + accountCategory + '\'' +
                 ", accountStatus='" + accountStatus + '\'' +
-                ", cards=" + cards +
                 '}';
     }
 }
